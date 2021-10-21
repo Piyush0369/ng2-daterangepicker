@@ -298,8 +298,10 @@
 .daterangepicker .drp-buttons .btn {
   margin-left: 8px;
   font-size: 12px;
-  font-weight: bold;
-  padding: 4px 8px;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border-width: 0px;
 }
 
 .daterangepicker.show-ranges.single.rtl .drp-calendar.left {

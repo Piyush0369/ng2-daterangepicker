@@ -11,9 +11,8 @@ export class AppComponent {
   title = 'angular9';
 
   public chosenDate: any = {
-    start: moment("2021-02-01"),
-    end: moment("2021-05-01"),
-    label: "Custom Range"
+    start: moment(),
+    end: moment()
   };
 
   public options = {

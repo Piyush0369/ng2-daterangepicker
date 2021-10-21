@@ -25,6 +25,7 @@ export class DaterangepickerComponent implements AfterViewInit, OnDestroy, DoChe
   public datePicker: any;
 
   @Input() options: any = {};
+  @Input() color: any = "";
 
   @Output() selected = new EventEmitter();
   @Output() cancelDaterangepicker = new EventEmitter();
@@ -41,6 +42,7 @@ export class DaterangepickerComponent implements AfterViewInit, OnDestroy, DoChe
   ) {
     this._differ['options'] = this.differs.find(this.options).create();
     this._differ['settings'] = this.differs.find(this.config.settings).create();
+    this.hexAToRGBA(this.color)
   }
 
   ngAfterViewInit() {
@@ -51,6 +53,7 @@ export class DaterangepickerComponent implements AfterViewInit, OnDestroy, DoChe
   ngDoCheck() {
     let optionsChanged = this._differ['options'].diff(this.options);
     let settingsChanged = this._differ['settings'].diff(this.config.settings);
+    this.hexAToRGBA(this.color)
 
     if (optionsChanged || settingsChanged) {
       this.render();
@@ -64,6 +67,45 @@ export class DaterangepickerComponent implements AfterViewInit, OnDestroy, DoChe
 
   ngOnDestroy() {
     this.destroyPicker();
+  }
+
+  private hexAToRGBA(h) {
+    console.log(h)
+    if(h.length > 0){
+      let r = "", g = "", b = "", a = "";
+  
+      if (h.length == 5) {
+        r = "0x" + h[1] + h[1];
+        g = "0x" + h[2] + h[2];
+        b = "0x" + h[3] + h[3];
+        a = "0x" + h[4] + h[4];
+      } else if (h.length == 9) {
+        r = "0x" + h[1] + h[2];
+        g = "0x" + h[3] + h[4];
+        b = "0x" + h[5] + h[6];
+        a = "0x" + h[7] + h[8];
+      } else if (h.length == 7) {
+        r = "0x" + h[1] + h[2];
+        g = "0x" + h[3] + h[4];
+        b = "0x" + h[5] + h[6];
+        a = "0x01"
+      } else if (h.length == 4) {
+        r = "0x" + h[1] + h[2];
+        g = "0x" + h[3] + h[4];
+        b = "0x" + h[5] + h[6];
+        a = "0x01";
+      }
+      let as = +(Number(a) / 255).toFixed(3);
+      this.setRootVariables(+ +r, + +g, + +b)
+  
+      // return "rgba(" + +r + "," + +g + "," + +b + "," + as + ")";
+    }
+  }
+
+  private setRootVariables(r, g, b) {
+    document.documentElement.style.setProperty('--red', r);
+    document.documentElement.style.setProperty('--green', g);
+    document.documentElement.style.setProperty('--blue', b);
   }
 
   private render(): void {
@@ -157,7 +199,7 @@ export class DaterangepickerComponent implements AfterViewInit, OnDestroy, DoChe
     const $ele = datePicker.element;
 
     if (!$container || !$ele) {
-        return;
+      return;
     }
 
     // auto vertical positioning

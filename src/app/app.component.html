@@ -3,7 +3,7 @@
     <h1>Angular 9</h1>
     <label for="date">Select Date</label>
 
-    <div class="input-group" daterangepicker [options]="options" (selected)="selectedDate($event, chosenDate)"
+    <div class="input-group" daterangepicker [options]="options" color="#458888" (selected)="selectedDate($event, chosenDate)"
       (applyDaterangepicker)="applyDatepicker($event)" (showDaterangepicker)="calendarEventsHandler($event)">
       <span class="form-control uneditable-input" name="daterange">
         {{ chosenDate.start | date:'mediumDate' }} - {{ chosenDate.end| date:'mediumDate' }}
